@@ -1,9 +1,16 @@
 import React from 'react'
 import styles from './index.css';
-import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
 
-class Editor extends React.Component{
+import ReactQuill, { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module';
+Quill.register('modules/ImageResize', ImageResize);
+
+const modules = {
+  ImageResize: {}
+};
+
+class Editor extends React.Component {
   constructor(props) {
     super(props)
     this.state = { text: '' } // You can also pass a Quill Delta here
@@ -16,13 +23,15 @@ class Editor extends React.Component{
 
   render() {
     return (
-      <ReactQuill value={this.state.text}
-                  onChange={this.handleChange} />
+      <ReactQuill
+        value={this.state.text}
+        modules={modules}
+        onChange={this.handleChange} />
     )
   }
 }
 
-export default function() {
+export default function () {
   return (
     <div className={styles.normal}>
       <Editor></Editor>
